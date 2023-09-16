@@ -1,8 +1,13 @@
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
-import { UserButton } from '@clerk/nextjs';
+import { UserButton, auth } from '@clerk/nextjs';
+
+import { ArrowRight, LogIn } from "lucide-react";
+import Link from "next/link";
 
 export default async function Home() {
+  const {userId} = await auth()
+  const isAuth = !!userId
   return (
     <div className="w-screen min-h-screen bg-gradient-to-r from-gray-700 via-gray-900 to-black">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -12,11 +17,26 @@ export default async function Home() {
         <UserButton afterSignOutUrl="/" />
         </div>
         <div className="flex mt-2">
-          <Button className="green-clr">
-            Go to Chats
-          </Button>
+          {isAuth && <Button variant="green">Go to Chats</Button>}
         
         </div>
+        <p className="max-w-xl mt-1 text-lg text-lime-500">
+          Use Worlds most powerful Large Language Models to instantly understand, interact and 
+          ask questions about any PDF document.
+        </p>
+
+        <div className="w-full mt-4">
+            {isAuth ? (
+              <FileUpload />
+            ) : (
+              <Link href="/sign-in">
+                <Button>
+                  Login to get Started!
+                  <LogIn className="w-4 h-4 ml-2" />
+                </Button>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </div>
