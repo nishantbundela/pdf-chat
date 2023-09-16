@@ -1,9 +1,9 @@
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { UserButton, auth } from '@clerk/nextjs';
-
 import { ArrowRight, LogIn } from "lucide-react";
 import Link from "next/link";
+import  FileUpload from '@/components/FileUpload';
 
 export default async function Home() {
   const {userId} = await auth()
